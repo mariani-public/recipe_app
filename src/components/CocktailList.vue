@@ -1,6 +1,13 @@
 <template>
   <div class="grid-list">
-    <CocktailCard v-for="cocktail in cocktails" :cocktail="cocktail" :key="cocktail.idDrink" @cardClicked="listItemAction" />
+    <CocktailCard
+      v-for="cocktail in cocktails"
+      :cocktail="cocktail"
+      :key="cocktail.idDrink"
+      @cardClicked="listItemAction"
+      :data-qa-id="cocktail.idDrink"
+      data-qa-name="cocktail-card"
+    />
   </div>
 </template>
 
