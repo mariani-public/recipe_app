@@ -1,6 +1,6 @@
 <template>
   <div class="grid-list">
-    <CocktailCard v-for="cocktail in cocktails" :cocktail="cocktail" :key="cocktail.idDrink" />
+    <CocktailCard v-for="cocktail in cocktails" :cocktail="cocktail" :key="cocktail.idDrink" @cardClicked="listItemAction" />
   </div>
 </template>
 
@@ -15,6 +15,10 @@ import CocktailCard from "./CocktailCard.vue";
 })
 export default class CocktailList extends Vue {
   @Prop({ required: true, default: () => { return [] } }) readonly cocktails!: Array<object>
+
+  private listItemAction(recipeId: string) {
+    this.$emit("listItemClicked", recipeId);
+  }
 }
 </script>
 
@@ -22,6 +26,6 @@ export default class CocktailList extends Vue {
 .grid-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-row-gap: 10px; 
+  grid-row-gap: 10px;
 }
 </style>

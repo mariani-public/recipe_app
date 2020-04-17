@@ -1,5 +1,5 @@
 <template>
-  <div class="card" @click="openRecipe()">
+  <div class="card" @click="cardAction(cocktail.idDrink)">
     <img :src="cocktail.strDrinkThumb" :alt="cocktail.strDrink" width="200px" height="200px" />
     <div>{{ cocktail.strDrink }}</div>
   </div>
@@ -12,8 +12,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class CocktailCard extends Vue {
   @Prop({ required: true, default: () => { return {} } }) readonly cocktail!: object;
 
-  private openRecipe() {
-    console.log('### opening recipe')
+  private cardAction(cocktailId: string): void {
+    this.$emit("cardClicked", cocktailId)
   }
 }
 </script>
