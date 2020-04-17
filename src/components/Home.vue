@@ -17,8 +17,8 @@
 <script lang="ts">
 import axios from "axios";
 import { Component, Vue } from "vue-property-decorator";
-import CocktailList from "@/CocktailList.vue";
-import CocktailPage from "@/CocktailPage.vue";
+import CocktailList from "@/components/CocktailList.vue";
+import CocktailPage from "@/components/CocktailPage.vue";
 
 @Component({
   components: {
