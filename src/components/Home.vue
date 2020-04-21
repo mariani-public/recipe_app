@@ -1,9 +1,12 @@
 <template>
   <div>
     <div class="header">
-      <h2>Some Cocktail Database</h2>
+      <div class="page-header">
+        <span @click="goBack" class="go-back" v-if="showDetail">&larr;</span>
+        <div style="margin: 0 auto">Some Cocktail Database</div>
+      </div>
     </div>
-    <div>
+    <div class="content">
       <CocktailList
         :cocktails="cocktailList"
         @listItemClicked="fetchRecipe"
@@ -47,23 +50,53 @@ export default class Home extends Vue {
     this.cocktail = cocktail.data.drinks[0];
     this.showDetail = true;
   }
+
+  private async goBack() {
+    const cocktailList = await axios.get(
+      "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail"
+    );
+
+    this.cocktailList = cocktailList.data.drinks;
+    this.showDetail = false;
+  }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .header {
   background-color: rgb(16, 14, 23);
   color: lightseagreen;
-  /* position: fixed;
-  display: block;
-  top: 0;
-  left: 0; */
   width: 100%;
   font-family: "Baloo Tamma 2", cursive;
+  text-align: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.go-back {
+  margin-left: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .app-body {
   display: flex;
   flex-direction: column;
+}
+
+.content {
+  padding-top: 60px;
 }
 </style>

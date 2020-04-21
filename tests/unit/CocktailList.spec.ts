@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { mount } from "@vue/test-utils";
 import CocktailList from "@/components/CocktailList.vue";
 
-describe("CocktailCard.vue", () => {
+describe("CocktailList.vue", () => {
   const cocktails = [
     {
       idDrink: "1234",

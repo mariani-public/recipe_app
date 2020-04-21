@@ -35,6 +35,8 @@ export default class CocktailCard extends Vue {
   align-items: center;
   justify-content: space-between;
 
+  text-align: center;
+
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
   }

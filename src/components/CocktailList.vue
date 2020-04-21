@@ -21,7 +21,13 @@ import CocktailCard from "@/components/CocktailCard.vue";
   }
 })
 export default class CocktailList extends Vue {
-  @Prop({ required: true, default: () => { return [] } }) readonly cocktails!: Array<object>
+  @Prop({
+    required: true,
+    default: () => {
+      return [];
+    }
+  })
+  readonly cocktails!: Array<object>;
 
   private listItemAction(recipeId: string) {
     this.$emit("listItemClicked", recipeId);
@@ -34,5 +40,6 @@ export default class CocktailList extends Vue {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-row-gap: 10px;
+  justify-items: center;
 }
 </style>
