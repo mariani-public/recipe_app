@@ -5,6 +5,30 @@
         <span @click="goBack" class="go-back" v-if="showDetail">&larr;</span>
         <div style="margin: 0 auto">Some Cocktail Database</div>
       </div>
+
+      <div class="searchBar">
+        <input type="text" v-model="searchString" placeholder="" />
+        <button type="button" name="button" @click="search">Search</button>
+        <div class="searchTypes">
+          <input
+            type="radio"
+            id="cocktail"
+            name="search-options"
+            value="cocktail"
+            v-model="searchType"
+          />
+          <label for="cocktail">Cocktail</label>
+
+          <input
+            type="radio"
+            id="ingredient"
+            name="search-options"
+            value="ingredient"
+            v-model="searchType"
+          />
+          <label for="ingredient">Ingredient</label>
+        </div>
+      </div>
     </div>
     <div class="content">
       <CocktailList
@@ -12,6 +36,7 @@
         @listItemClicked="fetchRecipe"
         v-if="!showDetail"
       />
+
       <CocktailPage :cocktail="cocktail" v-if="showDetail" />
     </div>
   </div>
@@ -33,6 +58,8 @@ export default class Home extends Vue {
   private cocktailList: Array<object> = [];
   private showDetail = false;
   private cocktail: object = {};
+  private searchType = "cocktail";
+  private searchString = "";
 
   async created() {
     const cocktailList = await axios.get(
@@ -55,6 +82,23 @@ export default class Home extends Vue {
     const cocktailList = await axios.get(
       "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail"
     );
+
+    this.cocktailList = cocktailList.data.drinks;
+    this.showDetail = false;
+  }
+
+  private async search() {
+    console.log('### radio', this.searchType)
+    let cocktailList = [];
+    if (this.searchType === "cocktail") {
+      cocktailList = await axios.get(
+        `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${this.searchString}`
+      );
+    } else {
+      cocktailList = await axios.get(
+        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${this.searchString}`
+      );
+    }
 
     this.cocktailList = cocktailList.data.drinks;
     this.showDetail = false;
@@ -97,6 +141,6 @@ export default class Home extends Vue {
 }
 
 .content {
-  padding-top: 60px;
+  padding-top: 110px;
 }
 </style>
