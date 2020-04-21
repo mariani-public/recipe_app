@@ -1,14 +1,20 @@
 <template>
   <div>
     <div class="header">
-      <div class="page-header">
+      <div class="page-header" data-qa-id="header">
         <span @click="goBack" class="go-back" v-if="showDetail">&larr;</span>
         <div style="margin: 0 auto">Some Cocktail Database</div>
       </div>
 
-      <div class="searchBar">
-        <input type="text" v-model="searchString" placeholder="" />
-        <button type="button" name="button" @click="search">Search</button>
+      <div>
+        <input
+          type="text"
+          v-model="searchString"
+          placeholder="Enter search text..."
+          @keyup.enter="search"
+        />
+        <button type="button" @click="search">Search</button>
+
         <div class="searchTypes">
           <input
             type="radio"
@@ -88,8 +94,7 @@ export default class Home extends Vue {
   }
 
   private async search() {
-    console.log('### radio', this.searchType)
-    let cocktailList = [];
+    let cocktailList;
     if (this.searchType === "cocktail") {
       cocktailList = await axios.get(
         `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${this.searchString}`
@@ -102,6 +107,7 @@ export default class Home extends Vue {
 
     this.cocktailList = cocktailList.data.drinks;
     this.showDetail = false;
+    this.searchString = "";
   }
 }
 </script>
