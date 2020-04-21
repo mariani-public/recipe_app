@@ -52,7 +52,7 @@ export default class CocktailPage extends Vue {
       const ingredientAmtKey = `strMeasure${i}`;
 
       if (this.cocktail[ingredientNameKey]) {
-        const ingredient = `${this.cocktail[ingredientAmtKey]}${this.cocktail[ingredientNameKey]}`;
+        const ingredient = `${this.cocktail[ingredientAmtKey].trim()} ${this.cocktail[ingredientNameKey].trim()}`;
 
         cocktailIngredients.push(ingredient);
       }
