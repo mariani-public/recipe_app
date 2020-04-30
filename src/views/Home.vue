@@ -38,7 +38,7 @@
 
     <CocktailList
       :cocktails="cocktailList"
-      @listItemClicked="fetchRecipe"
+      @listItemClicked="openRecipe"
       class="content"
     />
   </div>
@@ -68,7 +68,7 @@ export default class Home extends Vue {
     this.cocktailList = cocktailList.data.drinks;
   }
 
-  private fetchRecipe(recipeId: string) {
+  private openRecipe(recipeId: string) {
     this.$router.push({
       name: "cocktail",
       params: {

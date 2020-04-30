@@ -13,13 +13,14 @@ const routes: Array<RouteConfig> = [
   {
     path: "/cocktail/:id",
     name: "cocktail",
-    component: () => import(/* webpackChunkName: "cocktail" */ "../views/CocktailPage.vue")
+    component: () =>
+      import(/* webpackChunkName: "cocktail" */ "../views/CocktailPage.vue")
   }
 ];
 
 const router = new VueRouter({
   routes,
-  mode: 'history'
+  mode: "history"
 });
 
 export default router;

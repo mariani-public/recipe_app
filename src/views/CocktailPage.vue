@@ -23,7 +23,11 @@
       <div class="recipe-ingredients">
         <h3>Ingredients</h3>
         <ul>
-          <li v-for="(ingredient, index) in cocktailIngredients" :key="index">
+          <li
+            v-for="(ingredient, index) in cocktailIngredients"
+            :key="index"
+            data-qa-name="cocktail-ingredient"
+          >
             {{ ingredient }}
           </li>
         </ul>
@@ -41,11 +45,11 @@
 
 <script lang="ts">
 import axios from "axios";
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class CocktailPage extends Vue {
-  private cocktail: object = {};
+  private cocktail: { [key: string]: string | null } = {};
 
   get cocktailIngredients(): Array<string> {
     const cocktailIngredients = [];
@@ -68,7 +72,6 @@ export default class CocktailPage extends Vue {
   }
 
   async created() {
-    console.log(this.id)
     const cocktail = await axios.get(
       `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${this.$route.params.id}`
     );
@@ -79,7 +82,7 @@ export default class CocktailPage extends Vue {
   private goBack() {
     this.$router.push({
       name: "Home"
-    })
+    });
   }
 }
 </script>

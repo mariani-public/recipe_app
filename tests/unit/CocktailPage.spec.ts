@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { shallowMount } from "@vue/test-utils";
-import CocktailPage from "@/components/CocktailPage.vue";
+import CocktailPage from "@/views/CocktailPage.vue";
 
 describe("CocktailPage.vue", () => {
   const cocktail = {
@@ -14,10 +14,21 @@ describe("CocktailPage.vue", () => {
       "Add the ingredients to a shaker and shake. Serve in a chilled coupe."
   };
 
+  const $route = {
+    params: {
+      id: "123456"
+    }
+  };
+
   it("should render a cocktail name", () => {
     const wrapper = shallowMount(CocktailPage, {
-      propsData: {
-        cocktail
+      mocks: {
+        $route
+      },
+      data() {
+        return {
+          cocktail
+        };
       }
     });
     const renderedText = wrapper.find('[data-qa-id="name"]').text();
@@ -27,8 +38,13 @@ describe("CocktailPage.vue", () => {
 
   it("should render a cocktail image", () => {
     const wrapper = shallowMount(CocktailPage, {
-      propsData: {
-        cocktail
+      mocks: {
+        $route
+      },
+      data() {
+        return {
+          cocktail
+        };
       }
     });
     const image = wrapper.find('[data-qa-id="image"]');
@@ -40,12 +56,34 @@ describe("CocktailPage.vue", () => {
     expect(renderedAlt).to.include(cocktail.strDrink);
   });
 
-  // it("should render a list of cocktail ingredients", () => {});
+  it("should render a list of cocktail ingredients", () => {
+    const wrapper = shallowMount(CocktailPage, {
+      mocks: {
+        $route
+      },
+      data() {
+        return {
+          cocktail
+        };
+      }
+    });
+    const ingredients = wrapper.findAll('[data-qa-name="cocktail-ingredient"]');
+    const firstIngredient = ingredients.at(0).text();
+    const secondIngredient = ingredients.at(1).text();
+
+    expect(firstIngredient).to.include(cocktail.strIngredient1).and.include(cocktail.strMeasure1);
+    expect(secondIngredient).to.include(cocktail.strIngredient2).and.include(cocktail.strMeasure2);
+  });
 
   it("should render cocktail instructions", () => {
     const wrapper = shallowMount(CocktailPage, {
-      propsData: {
-        cocktail
+      mocks: {
+        $route
+      },
+      data() {
+        return {
+          cocktail
+        };
       }
     });
     const renderedText = wrapper.find('[data-qa-id="instructions"]').text();
