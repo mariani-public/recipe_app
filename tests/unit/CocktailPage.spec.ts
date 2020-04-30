@@ -10,7 +10,8 @@ describe("CocktailPage.vue", () => {
     strIngredient2: "Lime Cordial",
     strMeasure2: "1 oz",
     strDrinkThumb: "./gimletImg.png",
-    strInstructions: "Add the ingredients to a shaker and shake. Serve in a chilled coupe."
+    strInstructions:
+      "Add the ingredients to a shaker and shake. Serve in a chilled coupe."
   };
 
   it("should render a cocktail name", () => {

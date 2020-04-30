@@ -1,48 +1,51 @@
 <template>
-  <div class="page-grid">
-    <div class="header" data-qa-id="name">
-      {{ cocktail.strDrink }}
+  <div>
+    <div class="header">
+      <div class="page-header" data-qa-id="header">
+        <span @click="goBack" class="go-back">&larr;</span>
+        <div style="margin: 0 auto">Some Cocktail Database</div>
+      </div>
     </div>
+    <div class="content">
+      <div class="detail-header" data-qa-id="name">
+        {{ cocktail.strDrink }}
+      </div>
 
-    <div class="picture">
-      <img
-        :src="cocktail.strDrinkThumb"
-        :alt="cocktail.strDrink"
-        height="350px"
-        data-qa-id="image"
-      />
-    </div>
+      <div class="picture">
+        <img
+          :src="cocktail.strDrinkThumb"
+          :alt="cocktail.strDrink"
+          height="350px"
+          data-qa-id="image"
+        />
+      </div>
 
-    <div class="recipe-ingredients">
-      <h3>Ingredients</h3>
-      <ul>
-        <li v-for="(ingredient, index) in cocktailIngredients" :key="index">
-          {{ ingredient }}
-        </li>
-      </ul>
-    </div>
+      <div class="recipe-ingredients">
+        <h3>Ingredients</h3>
+        <ul>
+          <li v-for="(ingredient, index) in cocktailIngredients" :key="index">
+            {{ ingredient }}
+          </li>
+        </ul>
+      </div>
 
-    <div class="recipe-instructions">
-      <h3>Steps</h3>
-      <p style="margin-left: 10px" data-qa-id="instructions">
-        {{ cocktail.strInstructions }}
-      </p>
+      <div class="recipe-instructions">
+        <h3>Steps</h3>
+        <p style="margin-left: 10px" data-qa-id="instructions">
+          {{ cocktail.strInstructions }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class CocktailPage extends Vue {
-  @Prop({
-    required: true,
-    default: () => {
-      return {};
-    }
-  })
-  readonly cocktail!: { [key: string]: string | null };
+  private cocktail: object = {};
 
   get cocktailIngredients(): Array<string> {
     const cocktailIngredients = [];
@@ -63,11 +66,34 @@ export default class CocktailPage extends Vue {
 
     return cocktailIngredients;
   }
+
+  async created() {
+    console.log(this.id)
+    const cocktail = await axios.get(
+      `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${this.$route.params.id}`
+    );
+
+    this.cocktail = cocktail.data.drinks[0];
+  }
+
+  private goBack() {
+    this.$router.push({
+      name: "Home"
+    })
+  }
 }
 </script>
 
 <style lang="css" scoped>
-.page-grid {
+.go-back {
+  margin-left: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.content {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 50px 350px 1fr;
@@ -78,9 +104,10 @@ export default class CocktailPage extends Vue {
   grid-row-gap: 10px;
 
   color: rgb(16, 14, 23);
+  padding-top: 60px;
 }
 
-.header {
+.detail-header {
   grid-area: title;
   font-family: "Baloo Tamma 2", cursive;
   text-align: center;
