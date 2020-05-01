@@ -108,7 +108,8 @@ export default class CocktailPage extends Vue {
     // const ingredientList =
     //   JSON.parse(localStorage.getItem("ingredients") || {}) || [];
     const ingredientStorage = localStorage.getItem("ingredients");
-    const ingredientList = ingredientStorage === null ? [] : JSON.parse(ingredientStorage);
+    const ingredientList =
+      ingredientStorage === null ? [] : JSON.parse(ingredientStorage);
     const newIngredientList = [...ingredientList, ingredient];
 
     localStorage.setItem("ingredients", JSON.stringify(newIngredientList));

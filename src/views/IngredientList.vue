@@ -59,7 +59,8 @@ export default class IngredientList extends Vue {
 
   private fetchIngredients(): Array<string> {
     const ingredientStorage = localStorage.getItem("ingredients");
-    const ingredients = ingredientStorage === null ? [] : JSON.parse(ingredientStorage);
+    const ingredients =
+      ingredientStorage === null ? [] : JSON.parse(ingredientStorage);
     return ingredients;
   }
 
