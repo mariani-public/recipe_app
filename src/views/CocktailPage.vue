@@ -3,7 +3,8 @@
     <div class="header">
       <div class="page-header" data-qa-id="header">
         <span @click="goBack" class="go-back">&larr;</span>
-        <div style="margin: 0 auto">Some Cocktail Database</div>
+        <div style="margin: 0 auto; padding-left: 200px;">Some Cocktail Database</div>
+        <span @click="openIngredientList" style="cursor: pointer; margin-right: 10px;">Ingredient List</span>
       </div>
     </div>
     <div class="content">
@@ -22,12 +23,13 @@
 
       <div class="recipe-ingredients">
         <h3>Ingredients</h3>
-        <ul>
+        <ul class="ingredient-list">
           <li
             v-for="(ingredient, index) in cocktailIngredients"
             :key="index"
             data-qa-name="cocktail-ingredient"
           >
+            <button @click="addToIngredientList(ingredient)" style="margin-right: 20px;">Add to Ingredient List</button>
             {{ ingredient }}
           </li>
         </ul>
@@ -84,6 +86,19 @@ export default class CocktailPage extends Vue {
       name: "Home"
     });
   }
+
+  private openIngredientList() {
+    this.$router.push({
+      name: "ingredients"
+    })
+  }
+
+  private addToIngredientList(ingredient: string) {
+    const ingredientList = JSON.parse(localStorage.getItem('ingredients') || '') || [];
+    const newIngredientList = [...ingredientList, ingredient];
+
+    localStorage.setItem('ingredients', JSON.stringify(newIngredientList));
+  }
 }
 </script>
 
@@ -134,8 +149,14 @@ export default class CocktailPage extends Vue {
   font-family: "Open Sans", sans-serif;
 }
 
+.ingredient-list {
+  text-align: left;
+  display: inline-block;
+  margin-top: 0px;
+}
+
 ul {
-  list-style-type: circle;
+  list-style-type: none;
 }
 
 h3 {

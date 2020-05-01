@@ -2,7 +2,8 @@
   <div>
     <div class="header">
       <div class="page-header" data-qa-id="header">
-        <div style="margin: 0 auto">Some Cocktail Database</div>
+        <div style="margin: 0 auto; padding-left: 200px;">Some Cocktail Database</div>
+        <span @click="openIngredientList" style="cursor: pointer; margin-right: 10px;">Ingredient List</span>
       </div>
 
       <div>
@@ -91,6 +92,12 @@ export default class Home extends Vue {
 
     this.cocktailList = cocktailList.data.drinks;
     this.searchString = "";
+  }
+
+  private openIngredientList() {
+    this.$router.push({
+      name: "ingredients"
+    })
   }
 }
 </script>
