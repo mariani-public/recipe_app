@@ -27,7 +27,7 @@ describe("Cocktail App", function() {
   });
 
   it("should navigate back to the original list", function() {
-    cy.get("[data-qa-id='header'] span").click();
+    cy.get("[data-qa-id='header'] span.go-back").click();
 
     cy.get("[data-qa-id='name']").should("not.exist");
   });
@@ -52,5 +52,31 @@ describe("Cocktail App", function() {
     cy.get("[data-qa-name='cocktail-card']").each(card => {
       cy.wrap(card).should("contain", this.cocktailData.cocktailSearchString);
     });
+  });
+
+  it("should add an ingredient to the ingredient list", function() {
+    cy.get("input[value='cocktail']").click();
+    cy.get("input[type='text']").type(this.cocktailData.cocktailName);
+    cy.contains("button", "Search").click();
+    cy.wait(1000);
+    const cocktailCard = cy.contains(
+      "[data-qa-name='cocktail-card']",
+      this.cocktailData.cocktailName
+    );
+    cocktailCard.click();
+
+    cy.contains("button", "Add to Ingredient List").click();
+    cy.contains("span", "Ingredient List").click();
+
+    const ingredients = cy.get('[data-qa-name="ingredient"]');
+    ingredients.should("have.length", 1);
+    ingredients.should("contain", "Gin");
+  });
+
+  it("should remove an ingredient from the ingredient list", function() {
+    cy.contains("button", "Delete Ingredient").click();
+
+    const ingredients = cy.get('[data-qa-name="ingredient"]');
+    ingredients.should("have.length", 0);
   });
 });
