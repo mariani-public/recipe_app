@@ -3,8 +3,14 @@
     <div class="header">
       <div class="page-header" data-qa-id="header">
         <span @click="goBack" class="go-back">&larr;</span>
-        <div style="margin: 0 auto; padding-left: 200px;">Some Cocktail Database</div>
-        <span @click="openIngredientList" style="cursor: pointer; margin-right: 10px;">Ingredient List</span>
+        <div style="margin: 0 auto; padding-left: 200px;">
+          Some Cocktail Database
+        </div>
+        <span
+          @click="openIngredientList"
+          style="cursor: pointer; margin-right: 10px;"
+          >Ingredient List</span
+        >
       </div>
     </div>
     <div class="content">
@@ -29,7 +35,12 @@
             :key="index"
             data-qa-name="cocktail-ingredient"
           >
-            <button @click="addToIngredientList(ingredient)" style="margin-right: 20px;">Add to Ingredient List</button>
+            <button
+              @click="addToIngredientList(ingredient)"
+              style="margin-right: 20px;"
+            >
+              Add to Ingredient List
+            </button>
             {{ ingredient }}
           </li>
         </ul>
@@ -90,14 +101,15 @@ export default class CocktailPage extends Vue {
   private openIngredientList() {
     this.$router.push({
       name: "ingredients"
-    })
+    });
   }
 
   private addToIngredientList(ingredient: string) {
-    const ingredientList = JSON.parse(localStorage.getItem('ingredients') || '') || [];
+    const ingredientList =
+      JSON.parse(localStorage.getItem("ingredients") || "") || [];
     const newIngredientList = [...ingredientList, ingredient];
 
-    localStorage.setItem('ingredients', JSON.stringify(newIngredientList));
+    localStorage.setItem("ingredients", JSON.stringify(newIngredientList));
   }
 }
 </script>

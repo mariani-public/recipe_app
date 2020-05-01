@@ -71,8 +71,12 @@ describe("CocktailPage.vue", () => {
     const firstIngredient = ingredients.at(0).text();
     const secondIngredient = ingredients.at(1).text();
 
-    expect(firstIngredient).to.include(cocktail.strIngredient1).and.include(cocktail.strMeasure1);
-    expect(secondIngredient).to.include(cocktail.strIngredient2).and.include(cocktail.strMeasure2);
+    expect(firstIngredient)
+      .to.include(cocktail.strIngredient1)
+      .and.include(cocktail.strMeasure1);
+    expect(secondIngredient)
+      .to.include(cocktail.strIngredient2)
+      .and.include(cocktail.strMeasure2);
   });
 
   it("should render cocktail instructions", () => {

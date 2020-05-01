@@ -11,12 +11,24 @@
         Ingredient List
       </div>
       <div v-if="ingredients.length > 0">
-        <div class="ingredient-list" v-for="(ingredient, index) in ingredients" :key="index">
-          <button style="margin-right: 30px; border-radius: 5px;" @click="deleteIngredient(index)">Delete Ingredient</button>
-          <p>{{ingredient}}</p>
+        <div
+          class="ingredient-list"
+          v-for="(ingredient, index) in ingredients"
+          :key="index"
+          data-qa-name="ingredient"
+        >
+          <button
+            style="margin-right: 30px; border-radius: 5px;"
+            @click="deleteIngredient(index)"
+          >
+            Delete Ingredient
+          </button>
+          <p>{{ ingredient }}</p>
         </div>
       </div>
-      <p v-else>You haven't added any ingredients to your list!</p>
+      <p v-else data-qa-id="empty-ingredient-list">
+        You haven't added any ingredients to your list!
+      </p>
     </div>
   </div>
 </template>
@@ -36,14 +48,21 @@ export default class IngredientList extends Vue {
 
   private deleteIngredient(index: number) {
     const existingIngredientList = [...this.ingredients];
-    const newIngredientList = [...existingIngredientList.slice(0, index), ...existingIngredientList.slice(index + 1)];
+    const newIngredientList = [
+      ...existingIngredientList.slice(0, index),
+      ...existingIngredientList.slice(index + 1)
+    ];
 
-    localStorage.setItem('ingredients', JSON.stringify(newIngredientList));
+    localStorage.setItem("ingredients", JSON.stringify(newIngredientList));
     this.ingredients = newIngredientList;
   }
 
+  private fetchIngredients(): Array<string> {
+    return JSON.parse(localStorage.getItem("ingredients") || "") || [];
+  }
+
   created() {
-    this.ingredients = JSON.parse(localStorage.getItem('ingredients') || '') || [];
+    this.ingredients = this.fetchIngredients();
   }
 }
 </script>
@@ -54,7 +73,7 @@ export default class IngredientList extends Vue {
 }
 
 .content-header {
-  font-family: 'Baloo Tamma 2', cursive;
+  font-family: "Baloo Tamma 2", cursive;
   font-size: 30px;
   font-weight: 500;
 }
